@@ -15,9 +15,22 @@ object AggregationOptionTest {
       ("panda",1),
       ("pink",4)));
 
-    testReduceByKey(rDD)
+    testAggregation(rDD)
+   // testGouptBy(rDD)
+
+    //testReduceByKey(rDD)
   }
 
+
+  private def testAggregation(rDD: RDD[(String, Int)]) = {
+    var rdd = rDD.aggregateByKey(0)((x, y) => (x + y), (x, y) => x + y);
+    rdd.foreach(println)
+  }
+
+  private def testGouptBy(rDD: RDD[(String, Int)]) = {
+    var rdd = rDD.groupByKey();
+    rdd.foreach(x => println(x))
+  }
 
   private def testReduceByKey(rDD: RDD[(String, Int)]) = {
     var rdd = rDD.mapValues(((_, 1)))
